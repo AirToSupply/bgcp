@@ -1,0 +1,38 @@
+version: 0.1.1
+
+server-package-dir: /tmp/install/tidb-community-server-v6.5.2-linux-amd64.tar.gz
+
+toolkit-package-dir: /tmp/install/tidb-community-toolkit-v6.5.2-linux-amd64.tar.gz
+
+tiup-deploy-dir: /opt/tiup-deploy
+
+tidb: 
+  # tidb cluster name
+  cluster: tidb-v6.5.2
+  # tidb cluster version
+  version: v6.5.2
+  # tidb servers host
+  hosts:
+    - host: node100
+  # tidb servers port
+  port: 4000
+  user: root
+  sys:
+    character: utf8mb4
+    env: 
+      # sql node
+      # sql_mode: ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+      # collation
+      collation_connection: utf8_general_ci
+      collation_database: utf8_general_ci
+      collation_server: utf8_general_ci
+      # character
+      # SET NAMES utf8mb4;
+      # SET CHARACTER SET utf8mb4;
+      character_set_connection: utf8mb4
+      character_set_server: utf8mb4
+      tidb_check_mb4_value_in_utf8: OFF
+      # time_zone e.g. UTC
+      # time_zone: SYSTEM
+      # default: 67108864 (64MB)
+      max_allowed_packet: 134217728
