@@ -1,0 +1,110 @@
+version: 0.1.1
+
+# SSH Server
+ssh: 
+  port: 22
+
+# Deplog User
+deploy-user: zhongtai
+
+# Juicefs deploy
+juicefs:
+  servers:
+    - host: node100
+  # File system name
+  fs-name: juice
+  # Install package path
+  package-dir: /tmp/install/juicefs-1.0.4-linux-amd64.tar.gz
+  # Install oath
+  # [Note] Do not make arbitrary modifications!
+  deploy-dir: /usr/local/bin
+  # Data dir
+  data-dir: /data/juice/data
+  # Log dir
+  log-dir: /data/juice/logs
+  # Data cache dir
+  cache-dir: /data/juice/cache
+  # Juicefs metadata
+  metadata:
+    type: mysql
+    config:
+      # -----------
+      # mysql
+      # -----------
+      ip: node100
+      port: 3306
+      user: root
+      password: root
+      database: juicefs
+      addons:
+      # -----------
+      # postgresql
+      # -----------
+      # ip: node100
+      # port: 5432
+      # user: postgres
+      # password: postgres
+      # database: juicefs
+      # addons: sslmode=disable
+  # Juicefs storage
+  storage:
+    type: minio
+    config:
+      # -----------
+      # minio
+      # -----------
+      endpoint: http://node100:9966
+      bucket: juicefs
+      access-key: minioadmin
+      secret-key: minioadmin
+  # Format
+  format:
+    config:
+      # size of block in KiB (4096)
+      # block-size: 4096
+      # hard quota of the volume limiting its usage of space in GiB (0)
+      # capacity: 0
+      # hard quota of the volume limiting its number of inodes (0)
+      # inodes: 0
+      # compression algorithm (lz4, zstd, none) (none)
+      # compress: none
+      # store the blocks into N buckets by hash of key (0)
+      # shards: 0
+      # number of days after which removed files will be permanently deleted (1)
+      # trash-days: 1
+   # Mount
+  mount:
+    config:
+      # file permissions for cached blocks (0600)
+      # cache-mode: 0600
+      # size of cached objects in MiB (102400)
+      cache-size: 512000
+      # total read/write buffering in MB (300)
+      # buffer-size: 300
+
+# Integration
+# HDFS
+hdfs:
+  # Integration enable
+  integration: true
+  # Deploy Servers
+  servers:
+    - host: node100
+  # Install package path
+  package-dir: /tmp/install/hadoop-3.2.4.tar.gz
+  # Juicefs on HDFS plugins jar file
+  plugin-dir: /tmp/install/juicefs-hadoop-1.0.4.jar
+  # Install path
+  deploy-dir: /opt
+  # Home data
+  home-dir: /opt/hadoop-3.2.4
+  # Juicefs on HDFS configurations
+  config:
+    # fs.defaultFS: jfs://${juicefs.fs-name}
+    # juicefs.meta: # refer to ${juicefs.metadata.config}
+    # juicefs.cache-dir: ${juicefs.cache-dir}
+    # juicefs.cache-size: ${juicefs.mount.cache-size}
+    fs.jfs.impl: io.juicefs.JuiceFileSystem
+    fs.AbstractFileSystem.jfs.impl: io.juicefs.JuiceFS
+    juicefs.superuser: zhongtai
+    juicefs.access-log: /data/juice/logs/juicefs.access.log
