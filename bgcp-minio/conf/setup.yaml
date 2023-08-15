@@ -1,0 +1,34 @@
+version: 0.1.1
+
+# SSH Server
+ssh: 
+  port: 22
+
+# Deplog User
+deploy-user: zhongtai
+
+minio: 
+  # Install Package Path (refer to: https://github.com/AirToSupply/minio-bootstrap/releases/)
+  package-dir: /tmp/install/minio-bootstrap.tar.gz
+  # Install Path
+  deploy-dir: /opt
+  # MinIO Home Path (It need to inject env)
+  home-dir: /opt/minio-bootstrap
+  # MinIO Server Log Path
+  log-dir: /data/minio/logs
+  # Server RPC Port
+  server-port: 9966
+  # Web Console Port
+  web-console-port: 59966
+  # MinIO Server Environment Variables
+  env:
+    MINIO_ROOT_USER: admin@minio
+    MINIO_ROOT_PASSWORD: admin@minio
+    # MINIO_STORAGE_CLASS_STANDARD: EC:3
+    # MINIO_STORAGE_CLASS_RRS: EC:2
+  # MinIO Server Storage
+  volumns:
+    - worker: node100
+      drive: 
+        - /data/minio/data1
+        - /data/minio/data2
