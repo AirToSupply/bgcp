@@ -1,0 +1,71 @@
+version: 0.1.1
+
+# ##########################################
+# deploy super user
+# ##########################################
+user: 
+  # [Note] do not configure as root user
+  name: zhongtai
+  passwd: 1qazXSW@
+  sudo: true
+
+# ##########################################
+# network related
+# ##########################################
+network: 
+  ip: 192.168.0.100
+  # domain name (default: localhost.localdomain)
+  # [Note] If ip is `a.b.c.xxx`, hostname is recommended to set `nodexxx`.
+  hostname: node100
+
+# ##########################################
+# ssh server
+# ##########################################
+ssh: 
+  port: 22
+
+# ##########################################
+# os kernel
+# ##########################################
+os:
+  kernel:
+    vm.swappiness: 0
+    fs.nr_open: 10000000
+    fs.file-max: 11000000
+    fs.aio-max-nr: 1048576
+    net.core.somaxconn: 65535
+    net.ipv4.tcp_syncookies: 0
+    net.ipv4.tcp_max_syn_backlog: 1440000
+    net.core.netdev_max_backlog: 1440000
+  limit:
+    nofile: 131072
+    nproc:  655350
+    memlock: unlimited
+  swap: 
+    # [Note] It is recommended to close
+    enable: false
+  time-zone: Asia/Shanghai
+  locale:
+    enable: true
+
+# ##########################################
+# language environment
+# ##########################################
+jdk:
+  - version: 1.8.0_201
+    package-dir: /tmp/install/jdk-8u201-linux-x64.tar.gz
+    deploy-dir: /opt
+    home-dir: /opt/jdk1.8.0_201
+    deploy-user: zhongtai
+    env-enable: true
+  - version: 17.0.5
+    package-dir: /tmp/install/jdk-17_linux-x64_bin.tar.gz
+    deploy-dir: /opt
+    home-dir: /opt/jdk-17.0.5
+    # deploy-user: zhongtai
+    # env-enable: true
+
+
+
+
+
