@@ -1,0 +1,18 @@
+version: 0.1.1
+
+# SSH Server
+ssh: 
+  port: 22
+
+# Deplog User
+deploy-user: root
+
+# Docker Deploy
+docker:
+  # Install package path
+  package-dir: /tmp/install/docker-20.10.9.tgz
+  # Install path
+  # [Note] Do not make arbitrary modifications!
+  deploy-dir: /usr/bin
+  # Data dir
+  data-dir: /data/docker/
